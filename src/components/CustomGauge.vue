@@ -5,7 +5,7 @@
 <script>
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
+import { GaugeChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
@@ -16,24 +16,24 @@ import { ref, defineComponent } from "vue";
 
 use([
   CanvasRenderer,
-  PieChart,
+  GaugeChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent
 ]);
 
 export default defineComponent({
-  name: "HelloWorld",
+  name: "Test",
   components: {
     VChart
   },
   provide: {
-    [THEME_KEY]: "dark"
+    [THEME_KEY]: "light"
   },
   setup: () => {
     const option = ref({
       title: {
-        text: "Traffic Sources",
+        text: "Test Sources",
         left: "center"
       },
       tooltip: {
