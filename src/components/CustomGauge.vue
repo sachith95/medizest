@@ -1,59 +1,36 @@
 <template>
-  <chart
-    :options="{
-      series: [
-        {
-          type: 'gauge',
-          progress: {
-            show: true,
-            width: 18,
-          },
-          axisLine: {
-            lineStyle: {
-              width: 18,
-            },
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            length: 15,
-            lineStyle: {
-              width: 2,
-              color: '#999',
-            },
-          },
-          axisLabel: {
-            distance: 25,
-            color: '#999',
-            fontSize: 20,
-          },
-          anchor: {
-            show: true,
-            showAbove: true,
-            size: 25,
-            itemStyle: {
-              borderWidth: 10,
-            },
-          },
-          title: {
-            show: false,
-          },
-          detail: {
-            valueAnimation: true,
-            fontSize: 80,
-            offsetCenter: [0, '70%'],
-          },
-          data: [
-            {
-              value: 70,
-            },
-          ],
+  <div>
+    <h1>{{ chart }}</h1>
+    <chart
+      :options="{
+        legend: {
+          top: 'bottom',
         },
-      ],
-    }"
-    autoresize
-  />
+        series: [
+          {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            roseType: 'area',
+            itemStyle: {
+              borderRadius: 8,
+            },
+            data: [
+              { value: 40, name: 'rose 1' },
+              { value: 38, name: 'rose 2' },
+              { value: 32, name: 'rose 3' },
+              { value: 30, name: 'rose 4' },
+              { value: 28, name: 'rose 5' },
+              { value: 26, name: 'rose 6' },
+              { value: 22, name: 'rose 7' },
+              { value: 18, name: 'rose 8' },
+            ],
+          },
+        ],
+      }"
+      autoresize
+    />
+  </div>
 </template>
 
 <script>
@@ -61,7 +38,7 @@ export default {
   name: "CustomGauge",
   props: {
     val: [String, Number],
-    name: [String, Number],
+    chart: [String, Number],
   },
   data() {
     return {};
@@ -71,7 +48,4 @@ export default {
 </script>
 
 <style scoped>
-.echarts {
-  width: 100%;
-}
 </style>
