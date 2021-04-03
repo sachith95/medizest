@@ -23,9 +23,12 @@ export default {
   components: {
     CustomGauge,
   },
+  mounted() {
+    this.getWeather()
+  },
   methods: {
-    getEconemyPredictions() {
-      Vue.axios.get(api).then((response) => {
+    getWeather() {
+      this.axios.get(`http://api.openweathermap.org/data/2.5/weather?q=Colombo & appid=d0ea899d8966e5c7e37ebd335ef931c1`).then((response) => {
         console.log(response.data);
       });
     },
