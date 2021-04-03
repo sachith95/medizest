@@ -1,87 +1,77 @@
 <template>
-  <v-chart class="chart" :option="option" />
+  <chart
+    :options="{
+      series: [
+        {
+          type: 'gauge',
+          progress: {
+            show: true,
+            width: 18,
+          },
+          axisLine: {
+            lineStyle: {
+              width: 18,
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+          splitLine: {
+            length: 15,
+            lineStyle: {
+              width: 2,
+              color: '#999',
+            },
+          },
+          axisLabel: {
+            distance: 25,
+            color: '#999',
+            fontSize: 20,
+          },
+          anchor: {
+            show: true,
+            showAbove: true,
+            size: 25,
+            itemStyle: {
+              borderWidth: 10,
+            },
+          },
+          title: {
+            show: false,
+          },
+          detail: {
+            valueAnimation: true,
+            fontSize: 80,
+            offsetCenter: [0, '70%'],
+          },
+          data: [
+            {
+              value: 70,
+            },
+          ],
+        },
+      ],
+    }"
+    autoresize
+  />
 </template>
 
 <script>
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { GaugeChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-} from "echarts/components";
-import VChart, { THEME_KEY } from "vue-echarts";
-import { ref, defineComponent } from "vue";
-
-use([
-  CanvasRenderer,
-  GaugeChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-]);
-
-export default defineComponent({
-  name: "Test",
-  components: {
-    VChart
+export default {
+  name: "CustomGauge",
+  props: {
+    val: [String, Number],
+    name: [String, Number],
   },
-  provide: {
-    [THEME_KEY]: "light"
+  data() {
+    return {};
   },
-  setup: () => {
-    const option = ref({
-      title: {
-        text: "Test Sources",
-        left: "center"
-      },
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-      legend: {
-        orient: "vertical",
-        left: "left",
-        data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
-      },
-      series: [
-        {
-          name: "Traffic Sources",
-          type: "pie",
-          radius: "55%",
-          center: ["50%", "60%"],
-          data: [
-            { value: 335, name: "Direct" },
-            { value: 310, name: "Email" },
-            { value: 234, name: "Ad Networks" },
-            { value: 135, name: "Video Ads" },
-            { value: 1548, name: "Search Engines" }
-          ],
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: "rgba(0, 0, 0, 0.5)"
-            }
-          }
-        }
-      ]
-    });
-
-    return { option };
-  }
-});
+  methods: {},
+};
 </script>
 
 <style scoped>
-.chart {
-  height: 100vh;
-}
-</style>
-
-<style>
-body {
-  margin: 0;
+.echarts {
+  width: 100%;
 }
 </style>

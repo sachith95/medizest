@@ -1,18 +1,36 @@
 <template>
-  <div id="app">
-    <CustomGauge></CustomGauge>
-  </div>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title>MediZest</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+      <v-img src="@/assets/remote-work-man.svg"></v-img>
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <CustomGauge />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import CustomGauge from './components/CustomGauge'
+import CustomGauge from "./components/CustomGauge";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    CustomGauge
-  }
-}
+    CustomGauge,
+  },
+  methods: {
+    getEconemyPredictions() {
+      Vue.axios.get(api).then((response) => {
+        console.log(response.data);
+      });
+    },
+  },
+};
 </script>
 
 <style>
