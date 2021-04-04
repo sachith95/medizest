@@ -71,7 +71,7 @@ export default {
   mounted() {
     //this.getWeather();
     this.getEconmey();
-    this. search(); 
+    //this.search();
   },
   methods: {
     getWeather() {
@@ -85,88 +85,63 @@ export default {
     },
     getEconmey() {
       this.axios
-        .post(
-          `https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/b6bf4e3f7e664dc88f28efb9fc2234e6/execute?api-version=2.0&details=true`,
-          {
-            Inputs: {
-              input1: {
-                ColumnNames: [
-                  "age",
-                  "fnlwgt",
-                  "education",
-                  "occupation",
-                  "race",
-                  "gender",
-                  "native-country",
-                ],
-                Values: [
-                  ["0", "0", "value", "value", "value", "value", "value"],
-                  ["12", "0", "value", "value", "value", "value", "value"],
-                ],
-              },
-            },
-            GlobalParameters: {},
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization:
-                "Bearer " +
-                "mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
+        .post(`https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`)
         .then((response) => {
           console.log(response.data);
         });
     },
     search() {
-      let req = require("request");
+      var url =
+        "https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/ddd500ba69b34caf9cb5e1379a35b008/execute?api-version=2.0&details=true";
 
-      const uri =
-        "https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/b6bf4e3f7e664dc88f28efb9fc2234e6/execute?api-version=2.0&details=true";
-      const apiKey =
-        "mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
 
-      let data = {
-        Inputs: {
-          input1: {
-            ColumnNames: [
-              "age",
-              "fnlwgt",
-              "education",
-              "occupation",
-              "race",
-              "gender",
-              "native-country",
-            ],
-            Values: [
-              ["0", "0", "value", "value", "value", "value", "value"],
-              ["12", "0", "value", "value", "value", "value", "value"],
-            ],
-          },
-        },
-        GlobalParameters: {},
-      };
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer QIkr3+9B1utej0eiyzvPfL3iBvM7iK7pQI0opsSf/0EnpMgrmjpfTfqXqp7H5bzc8C4iEBA31PSNojWMUQulGA=="
+      );
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-      const options = {
-        uri: uri,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + apiKey,
-        },
-        body: JSON.stringify(data),
-      };
-
-      req(options, (err, res, body) => {
-        if (!err && res.statusCode == 200) {
-          console.log(body);
-        } else {
-          console.log("The request failed with status code: " + res.statusCode);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
         }
-      });
+      };
+
+      var data = `{
+  "Inputs": {
+    "input1": {
+      "ColumnNames": [
+        "gender",
+        "age",
+        "income",
+        "race",
+        "edu_level"
+      ],
+      "Values": [
+        [
+          "value",
+          "0",
+          "value",
+          "value",
+          "value"
+        ],
+        [
+          "value",
+          "0",
+          "value",
+          "value",
+          "value"
+        ]
+      ]
+    }
+  },
+  "GlobalParameters": {}
+}`;
+
+      xhr.send(data);
     },
   },
 };
