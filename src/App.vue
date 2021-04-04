@@ -46,19 +46,27 @@
             <CustomCard :val="this.health" img="doc.jpg" />
           </v-col>
         </v-row>
-        <CustomGauge :val="20" img="doctor.svg" />
+        <v-row justify="center" align="center">
+          <iframe
+            width="100%"
+            height="500"
+            src="https://app.powerbi.com/view?r=eyJrIjoiZDQwMGVjZWYtZTE4ZS00ZmY4LWI0Y2ItNjhiNjBiYjc0MWI4IiwidCI6ImE2ZWMwZjFjLTJhMzQtNDFhOS1hZDExLTIyNzVhNDg4ODQ5NyIsImMiOjEwfQ%3D%3D"
+            frameborder="0"
+            allowFullScreen="true"
+          ></iframe>
+        </v-row>
       </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import CustomGauge from "./components/CustomGauge";
+// import CustomGauge from "./components/CustomGauge";
 import CustomCard from "./components/CustomCard";
 export default {
   name: "App",
   components: {
-    CustomGauge,
+    // CustomGauge,
     CustomCard,
   },
   data: () => {
@@ -68,7 +76,7 @@ export default {
       zip: "",
       education: "",
       health: "",
-      economy: ""
+      economy: "",
     };
   },
   beforeMount() {
@@ -92,13 +100,15 @@ export default {
           }
         )
         .then((response) => {
-           const val = response.data.Results.output1.value.Values[0]
+          const val = response.data.Results.output1.value.Values[0]
             .slice(7, response.data.Results.output1.value.Values[0].length - 1)
             .map((i) => Number(i));
           const maxVal = Math.max(...val);
-          const index = response.data.Results.output1.value.Values[0].indexOf(maxVal.toString());
-          const col =  response.data.Results.output1.value.ColumnNames[index]
-          this.economy = col.split('"')
+          const index = response.data.Results.output1.value.Values[0].indexOf(
+            maxVal.toString()
+          );
+          const col = response.data.Results.output1.value.ColumnNames[index];
+          this.economy = col.split('"');
           console.log(this.economy[1]);
         });
     },
@@ -118,9 +128,11 @@ export default {
             .slice(7, response.data.Results.output1.value.Values[0].length - 1)
             .map((i) => Number(i));
           const maxVal = Math.max(...val);
-          const index = response.data.Results.output1.value.Values[0].indexOf(maxVal.toString());
-          const col =  response.data.Results.output1.value.ColumnNames[index]
-          this.education = col.split('"')
+          const index = response.data.Results.output1.value.Values[0].indexOf(
+            maxVal.toString()
+          );
+          const col = response.data.Results.output1.value.ColumnNames[index];
+          this.education = col.split('"');
           console.log(this.education[1]);
         });
     },
@@ -137,7 +149,9 @@ export default {
         )
         .then((response) => {
           this.health =
-            response.data.Results.output1.value.Values[0][response.data.Results.output1.value.Values[0].length - 1];
+            response.data.Results.output1.value.Values[0][
+              response.data.Results.output1.value.Values[0].length - 1
+            ];
         });
     },
   },
