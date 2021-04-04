@@ -71,6 +71,7 @@ export default {
   mounted() {
     //this.getWeather();
     this.getEconmey();
+    this. search(); 
   },
   methods: {
     getWeather() {
@@ -106,14 +107,66 @@ export default {
             },
             GlobalParameters: {},
           },
-          { headers: {'Content-Type':'application/json', 'Authorization':('Bearer '+ 'mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==')} }
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer " +
+                "mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
         )
         .then((response) => {
           console.log(response.data);
         });
     },
     search() {
-      ///
+      let req = require("request");
+
+      const uri =
+        "https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/b6bf4e3f7e664dc88f28efb9fc2234e6/execute?api-version=2.0&details=true";
+      const apiKey =
+        "mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==";
+
+      let data = {
+        Inputs: {
+          input1: {
+            ColumnNames: [
+              "age",
+              "fnlwgt",
+              "education",
+              "occupation",
+              "race",
+              "gender",
+              "native-country",
+            ],
+            Values: [
+              ["0", "0", "value", "value", "value", "value", "value"],
+              ["12", "0", "value", "value", "value", "value", "value"],
+            ],
+          },
+        },
+        GlobalParameters: {},
+      };
+
+      const options = {
+        uri: uri,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + apiKey,
+        },
+        body: JSON.stringify(data),
+      };
+
+      req(options, (err, res, body) => {
+        if (!err && res.statusCode == 200) {
+          console.log(body);
+        } else {
+          console.log("The request failed with status code: " + res.statusCode);
+        }
+      });
     },
   },
 };
