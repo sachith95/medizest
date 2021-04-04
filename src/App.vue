@@ -7,13 +7,13 @@
       <v-spacer />
       <v-col>
         <v-row>
-        <h4>Team</h4>
+        <h4 class="mt-3">Team</h4>
         <v-img
           :src="require(`./assets/logo.png`)"
           height="60px"
-          width="100px"
+          width="50px"
           contain
-          class="ma-0"
+          class="ml-0"
         ></v-img>
         </v-row>
       </v-col>
