@@ -69,13 +69,44 @@ export default {
     };
   },
   mounted() {
-    this.getWeather();
+    //this.getWeather();
+    this.getEconmey();
   },
   methods: {
     getWeather() {
       this.axios
         .get(
           `https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=d0ea899d8966e5c7e37ebd335ef931c1`
+        )
+        .then((response) => {
+          console.log(response.data);
+        });
+    },
+    getEconmey() {
+      this.axios
+        .post(
+          `https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/b6bf4e3f7e664dc88f28efb9fc2234e6/execute?api-version=2.0&details=true`,
+          {
+            Inputs: {
+              input1: {
+                ColumnNames: [
+                  "age",
+                  "fnlwgt",
+                  "education",
+                  "occupation",
+                  "race",
+                  "gender",
+                  "native-country",
+                ],
+                Values: [
+                  ["0", "0", "value", "value", "value", "value", "value"],
+                  ["12", "0", "value", "value", "value", "value", "value"],
+                ],
+              },
+            },
+            GlobalParameters: {},
+          },
+          { headers: {'Content-Type':'application/json', 'Authorization':('Bearer '+ 'mfh98WE0V8FsJhDPDSh6bfu6mouijpSOYXCeASXDA7t+eRHNTxthHzu6pVJsnwqK78/3iIXXpz7pGDkZTxRPOA==')} }
         )
         .then((response) => {
           console.log(response.data);
