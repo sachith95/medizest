@@ -37,13 +37,13 @@
         </v-row>
         <v-row>
           <v-col cols="12" md="4">
-            <CustomCard :val="20" img="eco.jpg" />
+            <CustomCard :val="this.economy[1]" img="eco.jpg" />
           </v-col>
           <v-col cols="12" md="4">
-            <CustomCard :val="20" img="school.png" />
+            <CustomCard :val="this.education[1]" img="school.png" />
           </v-col>
           <v-col cols="12" md="4">
-            <CustomCard :val="20" img="doc.jpg" />
+            <CustomCard :val="this.health" img="doc.jpg" />
           </v-col>
         </v-row>
         <CustomGauge :val="20" img="doctor.svg" />
@@ -66,82 +66,79 @@ export default {
       age: 10,
       race: "",
       zip: "",
+      education: "",
+      health: "",
+      economy: ""
     };
   },
-  mounted() {
-    //this.getWeather();
-    this.getEconmey();
-    //this.search();
+  beforeMount() {
+    this.getEconomy();
+    this.getEducation();
+    this.getHealth();
   },
   methods: {
-    getWeather() {
+    search() {
+      //
+    },
+    getEconomy() {
       this.axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=d0ea899d8966e5c7e37ebd335ef931c1`
+        .post(
+          `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
+          {
+            ep: "economey",
+            age: "0",
+            zipcode: "",
+            race: "",
+          }
         )
         .then((response) => {
-          console.log(response.data);
+           const val = response.data.Results.output1.value.Values[0]
+            .slice(7, response.data.Results.output1.value.Values[0].length - 1)
+            .map((i) => Number(i));
+          const maxVal = Math.max(...val);
+          const index = response.data.Results.output1.value.Values[0].indexOf(maxVal.toString());
+          const col =  response.data.Results.output1.value.ColumnNames[index]
+          this.economy = col.split('"')
+          console.log(this.economy[1]);
         });
     },
-    getEconmey() {
+    getEducation() {
       this.axios
-        .post(`https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`)
+        .post(
+          `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
+          {
+            ep: "education",
+            age: "0",
+            zipcode: "",
+            race: "",
+          }
+        )
         .then((response) => {
-          console.log(response.data);
+          const val = response.data.Results.output1.value.Values[0]
+            .slice(7, response.data.Results.output1.value.Values[0].length - 1)
+            .map((i) => Number(i));
+          const maxVal = Math.max(...val);
+          const index = response.data.Results.output1.value.Values[0].indexOf(maxVal.toString());
+          const col =  response.data.Results.output1.value.ColumnNames[index]
+          this.education = col.split('"')
+          console.log(this.education[1]);
         });
     },
-    search() {
-      var url =
-        "https://ussouthcentral.services.azureml.net/workspaces/503bbc5966a5497cb2738a6976ff128b/services/ddd500ba69b34caf9cb5e1379a35b008/execute?api-version=2.0&details=true";
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", url);
-
-      xhr.setRequestHeader(
-        "Authorization",
-        "Bearer QIkr3+9B1utej0eiyzvPfL3iBvM7iK7pQI0opsSf/0EnpMgrmjpfTfqXqp7H5bzc8C4iEBA31PSNojWMUQulGA=="
-      );
-      xhr.setRequestHeader("Content-Type", "application/json");
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          console.log(xhr.status);
-          console.log(xhr.responseText);
-        }
-      };
-
-      var data = `{
-  "Inputs": {
-    "input1": {
-      "ColumnNames": [
-        "gender",
-        "age",
-        "income",
-        "race",
-        "edu_level"
-      ],
-      "Values": [
-        [
-          "value",
-          "0",
-          "value",
-          "value",
-          "value"
-        ],
-        [
-          "value",
-          "0",
-          "value",
-          "value",
-          "value"
-        ]
-      ]
-    }
-  },
-  "GlobalParameters": {}
-}`;
-
-      xhr.send(data);
+    getHealth() {
+      this.axios
+        .post(
+          `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
+          {
+            ep: "health",
+            age: "0",
+            zipcode: "",
+            race: "",
+          }
+        )
+        .then((response) => {
+          this.health =
+            response.data.Results.output1.value.Values[0][response.data.Results.output1.value.Values[0].length - 1];
+        });
     },
   },
 };
