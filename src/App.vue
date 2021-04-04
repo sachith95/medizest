@@ -1,32 +1,49 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title>MediZest</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-      <v-img
-        :src="require(`./assets/logo.png`)"
-        height="100px"
-        width="100px"
-        contain
-      ></v-img>
+      <v-col> MediZest </v-col>
+      <v-spacer />
+      <v-spacer />
+      <v-spacer />
+      <v-col>
+        <v-row>
+        <h4>Team</h4>
+        <v-img
+          :src="require(`./assets/logo.png`)"
+          height="60px"
+          width="100px"
+          contain
+          class="ma-0"
+        ></v-img>
+        </v-row>
+      </v-col>
     </v-app-bar>
 
     <v-main>
       <div class="ma-4">
-        <v-row>
-          <v-col cols="12" md="4">
+        <v-row justify="center" align="center">
+          <v-col cols="12" md="3">
+            <v-text-field
+              value="United State of America"
+              label="Country"
+              readonly
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="2">
             <v-text-field v-model="age" label="Age"></v-text-field>
           </v-col>
+          <v-col cols="12" md="2">
+            <v-select :items="items" v-model="gender" label="Gender"></v-select>
+          </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="2">
             <v-text-field
               v-model="race"
               label="Race/Ethnicities"
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="2">
             <v-text-field
               v-model="zip"
               label="Zip code"
@@ -43,7 +60,7 @@
             <CustomCard :val="this.education[1]" img="school.png" />
           </v-col>
           <v-col cols="12" md="4">
-            <CustomCard :val="this.health" img="doc.jpg" />
+            <CustomCard :val="`$${this.health}`" img="doc.png" />
           </v-col>
         </v-row>
         <v-row justify="center" align="center">
@@ -71,9 +88,11 @@ export default {
   },
   data: () => {
     return {
+      items: ["male", "female"],
       age: 10,
       race: "",
       zip: "",
+      gender: "male",
       education: "",
       health: "",
       economy: "",
@@ -86,7 +105,9 @@ export default {
   },
   methods: {
     search() {
-      //
+      this.getEconomy();
+      this.getEducation();
+      this.getHealth();
     },
     getEconomy() {
       this.axios
@@ -94,9 +115,9 @@ export default {
           `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
           {
             ep: "economey",
-            age: "0",
-            zipcode: "",
-            race: "",
+            age: this.age,
+            zipcode: this.zip,
+            race: this.race,
           }
         )
         .then((response) => {
@@ -118,9 +139,9 @@ export default {
           `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
           {
             ep: "education",
-            age: "0",
-            zipcode: "",
-            race: "",
+            age: this.age,
+            zipcode: this.zip,
+            race: this.race,
           }
         )
         .then((response) => {
@@ -142,9 +163,10 @@ export default {
           `https://medizest.azurewebsites.net/api/HttpTrigger1?code=aI3w866dYi/VmFDXMUoYysfL1lfeybwTgAAdHdieRvt4CoGwVL9Nag==`,
           {
             ep: "health",
-            age: "0",
-            zipcode: "",
-            race: "",
+            age: this.age,
+            zipcode: this.zip,
+            race: this.race,
+            gender: this.gender,
           }
         )
         .then((response) => {
