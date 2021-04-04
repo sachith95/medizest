@@ -37,15 +37,16 @@
         </v-row>
         <v-row>
           <v-col cols="12" md="4">
-            <CustomGauge :val="20" chart="Economy" />
+            <CustomCard :val="20" img="eco.jpg" />
           </v-col>
           <v-col cols="12" md="4">
-            <CustomGauge :val="20" chart="Education" />
+            <CustomCard :val="20" img="school.png" />
           </v-col>
           <v-col cols="12" md="4">
-            <CustomGauge :val="20" chart="Housing" />
+            <CustomCard :val="20" img="doc.jpg" />
           </v-col>
         </v-row>
+        <CustomGauge :val="20" img="doctor.svg" />
       </div>
     </v-main>
   </v-app>
@@ -53,11 +54,12 @@
 
 <script>
 import CustomGauge from "./components/CustomGauge";
-
+import CustomCard from "./components/CustomCard";
 export default {
   name: "App",
   components: {
     CustomGauge,
+    CustomCard,
   },
   data: () => {
     return {
