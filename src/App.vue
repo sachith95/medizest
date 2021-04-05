@@ -7,18 +7,16 @@
       <v-spacer />
       <v-col>
         <v-row>
-        <h4 class="mt-3">Team</h4>
-        <v-img
-          :src="require(`./assets/logo.png`)"
-          height="60px"
-          width="50px"
-          contain
-          class="ml-0"
-        ></v-img>
+          <v-img
+            :src="require(`./assets/logo.png`)"
+            height="60px"
+            width="50px"
+            contain
+            class="ml-0"
+          ></v-img>
         </v-row>
       </v-col>
     </v-app-bar>
-
     <v-main>
       <div class="ma-4">
         <v-row justify="center" align="center">
@@ -66,25 +64,51 @@
         <v-row justify="center" align="center">
           <iframe
             width="100%"
-            height="500"
+            height="700"
             src="https://app.powerbi.com/view?r=eyJrIjoiZDQwMGVjZWYtZTE4ZS00ZmY4LWI0Y2ItNjhiNjBiYjc0MWI4IiwidCI6ImE2ZWMwZjFjLTJhMzQtNDFhOS1hZDExLTIyNzVhNDg4ODQ5NyIsImMiOjEwfQ%3D%3D"
             frameborder="0"
             allowFullScreen="true"
           ></iframe>
         </v-row>
       </div>
+      <Map />
     </v-main>
+    <!-- <v-footer dark padless>
+      <v-card flat tile class="white--text text-center">
+        <v-card-text class="white--text pt-1">
+          Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.
+          Mauris cursus commodo interdum. Praesent ut risus eget metus luctus
+          accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim
+          a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula
+          lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus
+          iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum
+          tempor vel ut orci. Orci varius natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus.
+        </v-card-text>
+        <v-card-text class="white--text pt-0"> </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} — <strong>Volt</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer> -->
   </v-app>
 </template>
 
 <script>
 // import CustomGauge from "./components/CustomGauge";
 import CustomCard from "./components/CustomCard";
+import Map from "./components/Map";
+// import { AzureMap } from "vue-azure-maps";
 export default {
   name: "App",
   components: {
     // CustomGauge,
     CustomCard,
+    Map,
+    // AzureMap,
   },
   data: () => {
     return {
