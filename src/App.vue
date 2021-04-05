@@ -71,7 +71,6 @@
           ></iframe>
         </v-row>
       </div>
-      <Map />
     </v-main>
     <!-- <v-footer dark padless>
       <v-card flat tile class="white--text text-center">
@@ -98,17 +97,12 @@
 </template>
 
 <script>
-// import CustomGauge from "./components/CustomGauge";
 import CustomCard from "./components/CustomCard";
-import Map from "./components/Map";
-// import { AzureMap } from "vue-azure-maps";
+
 export default {
   name: "App",
   components: {
-    // CustomGauge,
     CustomCard,
-    Map,
-    // AzureMap,
   },
   data: () => {
     return {
